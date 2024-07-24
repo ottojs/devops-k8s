@@ -1,0 +1,23 @@
+---
+apiVersion: cert-manager.io/v1
+# TODO: Switch to Issuer type in specific namespace
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-production
+spec:
+  acme:
+    # Staging: https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # You must replace this email address with your own
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates and issues related to your account
+    # TODO: REPLACE
+    email: security@example.org
+    # Secret resource that will be used to store the account's private key
+    privateKeySecretRef:
+      name: letsencrypt-production-key
+    # Add a single challenge solver using nginx
+    solvers:
+      - http01:
+          ingress:
+            ingressClassName: nginx

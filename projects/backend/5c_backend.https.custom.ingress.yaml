@@ -1,0 +1,64 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-backend-https-custom
+  namespace: backend
+  annotations:
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/
+    # kubernetes.io/ingress.class: nginx
+
+    # Allow List
+    # nginx.ingress.kubernetes.io/whitelist-source-range: "127.0.0.1/32"
+    # ingress.kubernetes.io/whitelist-source-range: "127.0.0.1/32" # Deprecated?
+
+    # WebSocket Support
+    # https://stackoverflow.com/questions/58534215/kubernetes-ingress-websockets-connection-issue
+    # nginx.ingress.kubernetes.io/connection-proxy-header: "keep-alive"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "1000"
+
+    # Sticky Sessions for WebSockets
+    # You can (probably) disable this if you're using a
+    # shared remote Redis store to keep track of sessions
+    nginx.ingress.kubernetes.io/upstream-hash-by: "$remote_addr"
+
+    # Body Size
+    nginx.ingress.kubernetes.io/client_max_body_size: 1m
+    nginx.ingress.kubernetes.io/proxy-body-size: 1m
+
+    # Rate Limiting
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#rate-limiting
+    # nginx.ingress.kubernetes.io/limit-connections: "30"
+    nginx.ingress.kubernetes.io/limit-rps: "30"
+    # nginx.ingress.kubernetes.io/limit-rpm: "1200"
+    nginx.ingress.kubernetes.io/limit-whitelist: "127.0.0.1/32"
+
+    # Other Options
+    # nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
+    # nginx.ingress.kubernetes.io/proxy-body-size: "2m"
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # nginx.ingress.kubernetes.io/secure-backends: "true"
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/websocket-services: backend-service
+    # nginx.org/websocket-services: backend-service
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
+    #   proxy_set_header X-Custom "my-custom-value";
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - demo.ottojs.org
+      secretName: secret-cert-manual-domain-DATESTAMP
+  rules:
+    - host: "demo.ottojs.org"
+      http: &http_rules
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 80

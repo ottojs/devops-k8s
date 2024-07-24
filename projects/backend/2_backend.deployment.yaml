@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: backend
+  labels:
+    app: backend
+spec:
+  # TODO: Still issues with multiple
+  # Sticky hashing is the problem
+  replicas: 1
+  # https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#revision-history-limit
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      # imagePullSecrets:
+      #   - name: registry.ottojs.org-registry-key
+      containers:
+        - name: backend-container
+          imagePullPolicy: Always
+          # image: registry.ottojs.org/ottojs/debug:latest
+          # Defaults to hub.docker.com / docker.io
+          image: ottojs/debug:0.0.2
+          ports:
+            - containerPort: 3111
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false

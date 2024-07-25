@@ -56,12 +56,21 @@ kubectl apply -f ./ingress.nginx.config.yaml;
 
 ### DigitalOcean
 
+- [GitHub LoadBalancer](https://github.com/digitalocean/digitalocean-cloud-controller-manager/blob/master/docs/controllers/services/examples/README.md)
+- [GitHub All Annotations](https://github.com/digitalocean/digitalocean-cloud-controller-manager/blob/master/docs/controllers/services/annotations.md)
+
 #### Bash
 
 ```bash
 kubectl annotate service \
   ngx-ingress-nginx-controller \
   service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol="true" \
+  -n ingress-nginx;
+
+# Edit your domain below!
+kubectl annotate service \
+  ngx-ingress-nginx-controller \
+  service.beta.kubernetes.io/do-loadbalancer-hostname="example.com" \
   -n ingress-nginx;
 ```
 
@@ -71,5 +80,41 @@ kubectl annotate service \
 kubectl annotate service `
   ngx-ingress-nginx-controller `
   service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol="true" `
+  -n ingress-nginx;
+
+# Edit your domain below!
+kubectl annotate service `
+  ngx-ingress-nginx-controller `
+  service.beta.kubernetes.io/do-loadbalancer-hostname="example.com" `
+  -n ingress-nginx;
+```
+
+### Linode
+
+- [GitHub](https://github.com/linode/linode-cloud-controller-manager)
+
+#### Bash
+
+```bash
+kubectl annotate service \
+  ngx-ingress-nginx-controller \
+  service.beta.kubernetes.io/linode-loadbalancer-proxy-protocol="v2" \
+  -n ingress-nginx;
+kubectl annotate service \
+  ngx-ingress-nginx-controller \
+  service.beta.kubernetes.io/linode-loadbalancer-hostname-only-ingress="true" \
+  -n ingress-nginx;
+```
+
+#### PowerShell
+
+```powershell
+kubectl annotate service `
+  ngx-ingress-nginx-controller `
+  service.beta.kubernetes.io/linode-loadbalancer-proxy-protocol="v2" `
+  -n ingress-nginx;
+kubectl annotate service `
+  ngx-ingress-nginx-controller `
+  service.beta.kubernetes.io/linode-loadbalancer-hostname-only-ingress="true" `
   -n ingress-nginx;
 ```

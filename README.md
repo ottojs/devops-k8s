@@ -19,7 +19,8 @@ Pay special attention to the `global` directory files.
 
 ### Supported Providers
 
-- DigitalOcean
+- [DigitalOcean](https://www.digitalocean.com/) - [Kubernetes Dashboard](https://cloud.digitalocean.com/kubernetes/clusters/)
+- [Linode](https://www.linode.com/) - [Kubernetes Dashboard](https://cloud.linode.com/kubernetes/clusters)
 
 ### Useful Tools
 

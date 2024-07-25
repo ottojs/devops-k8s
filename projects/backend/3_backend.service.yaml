@@ -6,9 +6,8 @@ metadata:
   namespace: backend
   annotations:
     # Required for some providers
-    # service.beta.kubernetes.io/linode-loadbalancer-proxy-protocol: v2
+    service.beta.kubernetes.io/linode-loadbalancer-proxy-protocol: v2
     service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
-    # service.beta.kubernetes.io/do-loadbalancer-hostname: "demo.ottojs.org"
 spec:
   selector:
     app: backend

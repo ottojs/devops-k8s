@@ -22,6 +22,12 @@ Pay special attention to the `global` directory files.
 - [DigitalOcean](https://www.digitalocean.com/) - [Kubernetes Dashboard](https://cloud.digitalocean.com/kubernetes/clusters/)
 - [Linode](https://www.linode.com/) - [Kubernetes Dashboard](https://cloud.linode.com/kubernetes/clusters)
 
+### Local Setup
+
+- [Windows](docs/WINDOWS.md)
+- [macOS](docs/UNIX.md)
+- [Linux](docs/UNIX.md)
+
 ### Useful Tools
 
 - [yamllint](https://github.com/adrienverge/yamllint) v1.35.1

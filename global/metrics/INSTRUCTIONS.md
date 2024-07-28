@@ -15,5 +15,5 @@ help repo update;
 ## 2 - Install Helm Chart
 
 ```bash
-helm upgrade --install metrics-server metrics-server/metrics-server
+helm upgrade --install metrics-server metrics-server/metrics-server --namespace metrics --create-namespace;
 ```
